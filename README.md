@@ -5,40 +5,24 @@ The backend processes large CSV datasets using Pandas and NumPy to compute key i
 
 The frontend dashboard communicates with the backend APIs to fetch and display results dynamically, making the application simple, responsive, and easy to extend. This project demonstrates practical implementation of backend development, API design, data analysis, and frontend integration using Python and web technologies.
 
- Technologies Used
-
+Technologies Used
 Python (Flask, Pandas, NumPy)
-
 REST API architecture
-
 HTML, CSS, JavaScript
-
 CSV-based data analysis
-
 GitHub for version control
 
 Key Features
-
 IPL teams listing
-
 Team vs Team head-to-head analysis
-
 Complete team performance records
-
 Batsman performance statistics
-
 Bowler performance statistics
-
 API-driven architecture
 
- Use Case
-
+Use Case
 This project is ideal for learning and demonstrating:
-
 Data analytics with Python
-
 Flask API development
-
 Backend–frontend integration
-
 Real-world sports data analysis
