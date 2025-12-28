@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IPL Analytics Dashboard</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        padding: 20px;
+        margin: 0;
+    }
+    .container {
+        max-width: 900px;
+        margin: auto;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0px 0px 10px #aaa;
+    }
+    input, select {
+        width: 40%;
+        padding: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+    button {
+        padding: 10px 15px;
+        background: #007bff;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    button:hover {
+        background: #0056b3;
+    }
+    pre {
+        background: black;
+        color: #ff4d00;
+        padding: 15px;
+        min-height: 100px;
+        overflow-x: auto;
+        border-radius: 8px;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🏏 IPL Analytics Dashboard</h1>
+
+<!-- TEAMS LIST -->
+<div class="card">
+    <h2>All Teams</h2>
+    <button onclick="loadTeams()">Load Teams</button>
+    <pre id="teams-output"></pre>
+</div>
+
+<!-- TEAM VS TEAM -->
+<div class="card">
+    <h2>Team vs Team Stats</h2>
+    <input id="team1" placeholder="Team 1">
+    <input id="team2" placeholder="Team 2">
+    <button onclick="getTeamVsTeam()">Compare</button>
+    <pre id="teamvteam-output"></pre>
+</div>
+
+<!-- TEAM RECORD -->
+<div class="card">
+    <h2>Team Full Record</h2>
+    <input id="teamname" placeholder="Enter Team Name">
+    <button onclick="getTeamRecord()">Search</button>
+    <pre id="team-record-output"></pre>
+</div>
+
+<!-- BATTING RECORD -->
+<div class="card">
+    <h2>Batsman Record</h2>
+    <input id="batsman" placeholder="Enter Batsman Name">
+    <button onclick="getBatting()">Search</button>
+    <pre id="batting-output"></pre>
+</div>
+
+<!-- BOWLING RECORD -->
+<div class="card">
+    <h2>Bowler Record</h2>
+    <input id="bowler" placeholder="Enter Bowler Name">
+    <button onclick="getBowling()">Search</button>
+    <pre id="bowling-output"></pre>
+</div>
+
+</div>
+
+<script>
+const BASE = "http://127.0.0.1:5000";
+
+/* ========================
+      LOAD TEAMS
+========================= */
+function loadTeams() {
+    fetch(`${BASE}/api/teams`)
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById("teams-output").innerText =
+            JSON.stringify(data, null, 2);
+    });
+}
+
+/* ========================
+      TEAM vs TEAM
+========================= */
+function getTeamVsTeam() {
+    let t1 = document.getElementById("team1").value.trim();
+    let t2 = document.getElementById("team2").value.trim();
+
+    fetch(`${BASE}/api/teamvteam?team1=${t1}&team2=${t2}`)
+    .then(r => r.json())
+    .then(data => {
+        console.log(data)
+        document.getElementById("teamvteam-output").innerText =
+            JSON.stringify(data, null, 2);
+    });
+}
+
+/* ========================
+      TEAM RECORD
+========================= */
+function getTeamRecord() {
+    let t = document.getElementById("teamname").value.trim();
+
+    fetch(`${BASE}/api/team-record?team=${t}`)
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById("team-record-output").innerText =
+            JSON.stringify(data, null, 2);
+    });
+}
+
+/* ========================
+      BATTING
+========================= */
+function getBatting() {
+    let b = document.getElementById("batsman").value.trim();
+
+    fetch(`${BASE}/api/batting-record?batsman=${b}`)
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById("batting-output").innerText =
+            JSON.stringify(data);
+    });
+}
+
+/* ========================
+      BOWLING
+========================= */
+function getBowling() {
+    let b = document.getElementById("bowler").value.trim();
+
+    fetch(`${BASE}/api/bowling-record?bowler=${b}`)
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById("bowling-output").innerText =
+            JSON.stringify(data, null, 2);
+    });
+}
+</script>
+
+</body>
+</html>
