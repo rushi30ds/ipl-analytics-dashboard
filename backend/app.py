@@ -1,13 +1,15 @@
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
+import os
 
 import ipl
 import jugaad
 
+# Create Flask app FIRST
 app = Flask(__name__)
 
-# Enable CORS for frontend running at localhost:5500
-CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
+# Enable CORS for all origins (needed for GitHub Pages)
+CORS(app)
 
 @app.route('/')
 def home():
@@ -62,6 +64,8 @@ def bowling_record():
     response = jugaad.bowlerAPI(bowler_name)
     return Response(response, mimetype='application/json')
 
-# ---------------- RUN ----------------
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+# ---------------- RUN (Render compatible) ----------------
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
